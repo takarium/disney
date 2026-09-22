@@ -1,0 +1,707 @@
+<title>3家族ディズニー作戦マップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Kaisei+Decol:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#f2e9d6; --panel:#fffdf7; --panel2:#f9f1e0; --ink:#2b2450; --ink2:#6d6690;
+  --line:#e6d9bd; --line2:#efe6cf;
+  --gold:#c1922f; --gold-soft:#f6ecd1; --gold-line:#e2c988;
+  --royal:#3a397f; --violet:#7a4aa0; --magenta:#b84a86;
+  --sea:#0d8ba0; --sea-soft:#dcf1f3; --land:#c8497a; --land-soft:#fbe3ed;
+  --accent:var(--sea); --accent-soft:var(--sea-soft);
+  --ok:#2e9e5b; --ok-soft:#e3f4ea; --warn:#d18f00; --warn-soft:#f8eecf; --bad:#d6474a; --bad-soft:#fbe3e3;
+  --grey:#a29a86; --grey-soft:#ece5d4;
+  --spark:rgba(193,146,47,.16); --spark2:rgba(122,74,160,.10);
+  --shadow:0 1px 2px rgba(60,48,20,.05),0 6px 20px rgba(80,60,20,.09);
+  --r:20px; --r-sm:13px;
+  --disp:'Baloo 2','Zen Maru Gothic',system-ui,sans-serif;
+  --fairy:'Kaisei Decol','Baloo 2',serif;
+  --body:'Zen Maru Gothic',system-ui,sans-serif;
+}
+:root:not([data-theme="light"]){@media (prefers-color-scheme:dark){
+  --bg:#0d1030; --panel:#171a3c; --panel2:#1f2350; --ink:#f1ecff; --ink2:#a9a2d4;
+  --line:#2b2f5f; --line2:#242858;
+  --gold:#ecc76c; --gold-soft:#2a2544; --gold-line:#4a4170;
+  --sea-soft:#0b2f36; --land-soft:#3a1626;
+  --ok-soft:#123322; --warn-soft:#332a0d; --bad-soft:#3a1717; --grey-soft:#242850;
+  --spark:rgba(236,199,108,.22); --spark2:rgba(255,255,255,.16);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4);
+}}
+:root[data-theme="dark"]{
+  --bg:#0d1030; --panel:#171a3c; --panel2:#1f2350; --ink:#f1ecff; --ink2:#a9a2d4;
+  --line:#2b2f5f; --line2:#242858;
+  --gold:#ecc76c; --gold-soft:#2a2544; --gold-line:#4a4170;
+  --sea-soft:#0b2f36; --land-soft:#3a1626;
+  --ok-soft:#123322; --warn-soft:#332a0d; --bad-soft:#3a1717; --grey-soft:#242850;
+  --spark:rgba(236,199,108,.22); --spark2:rgba(255,255,255,.16);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+   radial-gradient(circle at 15% 22%,var(--spark) 0 1.4px,transparent 2px),
+   radial-gradient(circle at 68% 14%,var(--spark) 0 1.2px,transparent 2px),
+   radial-gradient(circle at 84% 46%,var(--spark2) 0 1.6px,transparent 2px),
+   radial-gradient(circle at 32% 70%,var(--spark) 0 1.2px,transparent 2px),
+   radial-gradient(circle at 55% 88%,var(--spark2) 0 1.5px,transparent 2px);
+  background-size:340px 320px,300px 280px,380px 360px,320px 300px,360px 340px}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-bottom:100px}
+h1,h2,h3{font-family:var(--disp);text-wrap:balance;margin:0}
+button{font-family:var(--body);cursor:pointer}
+.mut{color:var(--ink2)}
+
+/* header marquee */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);
+  border-bottom:2px solid var(--gold-line)}
+.hdr{padding-bottom:0}
+.marquee{position:relative;overflow:hidden;border-radius:0 0 22px 22px;
+  background:linear-gradient(135deg,#2c2b6e 0%,var(--royal) 42%,var(--violet) 78%,var(--magenta) 130%);
+  padding:12px 15px 13px;box-shadow:0 4px 16px rgba(40,30,80,.28)}
+.marquee::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle at 18% 30%,rgba(255,255,255,.7) 0 1px,transparent 2px),
+   radial-gradient(circle at 40% 68%,rgba(255,255,255,.5) 0 1px,transparent 2px),
+   radial-gradient(circle at 62% 24%,rgba(255,255,255,.6) 0 1px,transparent 2px),
+   radial-gradient(circle at 90% 60%,rgba(255,255,255,.45) 0 1px,transparent 2px);
+  background-size:120px 90px,150px 110px}
+.castle{position:absolute;right:-6px;bottom:-6px;height:76px;opacity:.22;color:#fff;pointer-events:none}
+.brand{position:relative;display:flex;align-items:center;gap:11px;z-index:2}
+.brand .logo{width:40px;height:40px;border-radius:13px;flex:none;display:grid;place-items:center;
+  background:linear-gradient(145deg,#ffe6a6,var(--gold));font-size:22px;
+  box-shadow:0 2px 8px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.6)}
+.brand h1{font-family:var(--fairy);font-size:19px;font-weight:700;color:#fff;letter-spacing:.5px;
+  text-shadow:0 1px 6px rgba(0,0,0,.28)}
+.brand small{display:block;font-family:var(--body);font-weight:500;color:#f4e8c9;font-size:11px;letter-spacing:.2px}
+.dayToggle{position:relative;z-index:2;display:flex;gap:7px;margin-top:11px;
+  background:rgba(255,255,255,.14);padding:4px;border-radius:14px;backdrop-filter:blur(3px)}
+.dayToggle button{flex:1;border:none;background:transparent;color:#f0e7cf;
+  border-radius:11px;padding:8px 8px;font-family:var(--disp);font-weight:700;font-size:14px;line-height:1.2;text-align:center;transition:.18s}
+.dayToggle button small{display:block;font-family:var(--body);font-size:10px;font-weight:500;opacity:.8}
+.dayToggle button.on{color:#3a2c06;box-shadow:0 2px 7px rgba(0,0,0,.2)}
+.dayToggle button.on.sea{background:linear-gradient(160deg,#eafcff,#bfeef4)}
+.dayToggle button.on.land{background:linear-gradient(160deg,#ffeaf3,#fcd0e2)}
+.statusbar{display:flex;align-items:center;gap:8px;padding:9px 4px 10px;font-size:12px}
+.statusbar .dot{width:8px;height:8px;border-radius:50%;background:var(--grey);flex:none}
+.statusbar .dot.live{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.refresh{margin-left:auto;border:1.5px solid var(--gold-line);background:var(--panel);color:var(--ink);
+  border-radius:11px;padding:6px 12px;font-family:var(--disp);font-weight:700;font-size:12px;display:flex;align-items:center;gap:6px}
+.refresh:active{transform:scale(.97)}
+.spin{display:inline-block;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+
+/* bottom tabs */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--panel);
+  border-top:2px solid var(--gold-line);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -3px 14px rgba(50,30,10,.08)}
+nav.tabs button{flex:1;background:none;border:none;color:var(--ink2);padding:9px 4px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--disp);font-size:11px;font-weight:700}
+nav.tabs button .ic{font-size:20px;line-height:1}
+nav.tabs button.on{color:var(--accent)}
+nav.tabs button.on .ic{transform:translateY(-1px);filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+
+/* generic */
+.card{background:var(--panel);border:1.5px solid var(--gold-line);border-radius:var(--r);box-shadow:var(--shadow)}
+.section-t{font-family:var(--fairy);font-size:14px;font-weight:700;letter-spacing:.5px;color:var(--ink);
+  margin:20px 4px 10px;display:flex;align-items:center;gap:8px}
+.section-t::before{content:"✦";color:var(--gold);font-size:14px}
+
+/* wait pill */
+.wt{font-family:var(--disp);font-weight:800;font-variant-numeric:tabular-nums;border-radius:11px;
+  min-width:48px;text-align:center;padding:5px 6px;line-height:1.05;font-size:15px;border:1.5px solid transparent}
+.wt small{display:block;font-size:8.5px;font-weight:600;letter-spacing:.3px;opacity:.85;font-family:var(--body)}
+.wt.g{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)} .wt.y{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.wt.r{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)} .wt.x{background:var(--grey-soft);color:var(--grey)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700;white-space:nowrap}
+.chip.h{background:var(--gold-soft);color:var(--gold)}
+.chip.tag{background:var(--grey-soft);color:var(--ink2);font-weight:500}
+.chip.scary{background:var(--bad-soft);color:var(--bad)}
+.kid{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-size:10.5px;font-weight:700;
+  padding:2px 8px;border:1.5px solid var(--line)}
+.kid.yes{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.kid.no{background:var(--grey-soft);color:var(--grey);border-color:transparent;text-decoration:line-through;opacity:.75}
+
+/* attraction row */
+.att{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border-bottom:1px solid var(--line2)}
+.att:last-child{border-bottom:none}
+.att .body{flex:1;min-width:0}
+.att .nm{font-family:var(--disp);font-weight:700;font-size:14.5px;line-height:1.3}
+.att .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;align-items:center}
+.att .kids{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.att.done{opacity:.5}
+.att .prio{flex:none;border:1.5px solid var(--gold-line);background:var(--panel2);border-radius:12px;width:42px;height:42px;
+  font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink2);display:grid;place-items:center;padding:0}
+.att .prio.must{background:var(--bad);border-color:transparent;color:#fff}
+.att .prio.want{background:var(--warn);border-color:transparent;color:#fff}
+
+/* filter bar */
+.filters{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 11px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;border:1.5px solid var(--gold-line);background:var(--panel);color:var(--ink2);
+  border-radius:999px;padding:7px 14px;font-family:var(--disp);font-weight:700;font-size:12.5px}
+.filters button.on{background:var(--accent);border-color:transparent;color:#fff;box-shadow:var(--shadow)}
+.sortsel{display:flex;align-items:center;gap:7px;margin:0 4px 12px;font-size:12.5px;color:var(--ink2)}
+.sortsel select{font-family:var(--disp);font-weight:700;color:var(--ink);background:var(--panel);
+  border:1.5px solid var(--gold-line);border-radius:10px;padding:6px 10px;font-size:12.5px}
+
+/* map */
+.pbanner{position:relative;overflow:hidden;border-radius:var(--r);margin-bottom:14px;padding:16px 16px 15px;
+  border:1.5px solid var(--gold-line);color:#fff;box-shadow:var(--shadow)}
+.pbanner.sea{background:linear-gradient(135deg,#0a5866,#0d8ba0 60%,#39b6c4)}
+.pbanner.land{background:linear-gradient(135deg,#7a2b57,#c8497a 60%,#e88bb0)}
+.pbanner .sil{position:absolute;right:6px;bottom:-4px;height:80px;opacity:.28;color:#fff}
+.pbanner .pt{position:relative;font-family:var(--fairy);font-size:20px;font-weight:700;letter-spacing:.5px;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.pbanner .ps{position:relative;font-size:12px;font-weight:600;opacity:.92;margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:9px 14px;padding:12px 14px;margin-bottom:14px;font-size:11.5px;font-weight:600}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.mininote{font-size:11.5px;color:var(--ink2);margin:0 4px 11px;line-height:1.7}
+.zone{margin-bottom:13px;overflow:hidden;border-radius:var(--r)}
+.zone .zh{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line2)}
+.zone .zh .zi{font-size:22px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
+.zone .zh .zn{font-family:var(--fairy);font-weight:700;font-size:15.5px}
+.zone .zh .fac{margin-left:auto;display:flex;gap:7px;font-size:16px}
+.zpins{display:flex;flex-wrap:wrap;gap:7px;padding:12px 14px}
+.zpin{display:flex;align-items:center;gap:7px;border:1.5px solid var(--line);border-radius:12px;padding:6px 10px 6px 8px;
+  background:var(--panel);max-width:100%;text-align:left}
+.zpin:active{transform:scale(.98)}
+.zpin .pd{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 2px var(--panel)}
+.zpin .pn{font-family:var(--disp);font-size:12.5px;font-weight:700;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:158px}
+.zpin .pw{font-family:var(--disp);font-weight:800;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.pd.g{background:var(--ok)} .pd.y{background:var(--warn)} .pd.r{background:var(--bad)} .pd.x{background:var(--grey)}
+.zone .facline{padding:0 14px 12px;font-size:11.5px;color:var(--ink2);line-height:1.6}
+
+/* member */
+.mrow{display:flex;align-items:center;gap:11px;padding:12px 14px;border-bottom:1px solid var(--line2)}
+.mrow:last-child{border-bottom:none}
+.mrow .av{width:40px;height:40px;border-radius:13px;flex:none;display:grid;place-items:center;font-size:20px;background:var(--accent-soft)}
+.mrow input[type=number]{width:64px;font-family:var(--disp);font-weight:800;font-size:16px;text-align:center;color:var(--ink);
+  background:var(--panel2);border:1.5px solid var(--gold-line);border-radius:10px;padding:6px 4px}
+.mrow input[type=text]{font-family:var(--body);font-weight:700;font-size:14px;color:var(--ink);
+  background:var(--panel2);border:1.5px solid var(--gold-line);border-radius:10px;padding:6px 8px;width:130px;max-width:42vw}
+.mrow .ms{font-size:11.5px;color:var(--ink2);margin-top:3px}
+.mrow .hin{margin-left:auto;display:flex;align-items:center;gap:5px}
+.mrow .rm{border:none;background:none;color:var(--grey);font-size:18px;padding:2px 4px}
+.addm{width:100%;border:1.5px dashed var(--gold-line);background:var(--panel2);color:var(--ink2);border-radius:13px;
+  padding:12px;font-family:var(--disp);font-weight:700;font-size:13px;margin-top:10px}
+
+/* plan */
+.summary{display:flex;gap:9px;margin:2px 4px 14px}
+.summary .box{flex:1;border-radius:16px;padding:13px 8px;text-align:center;box-shadow:var(--shadow);
+  background:var(--panel);border:1.5px solid var(--gold-line)}
+.summary .box b{font-family:var(--disp);font-size:25px;font-weight:800;display:block;line-height:1}
+.summary .box span{font-size:11px;color:var(--ink2);font-weight:600}
+.hint{background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:14px;padding:12px 14px;font-size:12.5px;line-height:1.7;margin:2px 0 6px}
+.showrow{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid var(--line2)}
+.showrow:last-child{border-bottom:none}
+.showrow .sp{flex:none;border:1.5px solid var(--gold-line);background:var(--panel2);border-radius:10px;width:36px;height:36px;
+  font-family:var(--disp);font-weight:800;font-size:17px;color:var(--ink2)}
+.showrow .sp.must{background:var(--bad);border-color:transparent;color:#fff}.showrow .sp.want{background:var(--warn);border-color:transparent;color:#fff}
+.showrow input{flex:1;min-width:0;border:none;background:none;font-family:var(--body);font-weight:700;font-size:14px;color:var(--ink)}
+.showrow input:focus{outline:none}
+.showrow .rm{border:none;background:none;color:var(--grey);font-size:17px}
+.chk{width:28px;height:28px;border-radius:9px;border:2px solid var(--gold-line);background:var(--panel);flex:none;display:grid;place-items:center;color:transparent;font-weight:900}
+.chk.on{background:var(--ok);border-color:transparent;color:#fff}
+.foot{font-size:11px;color:var(--ink2);text-align:center;padding:22px 12px 6px;line-height:1.8}
+a{color:var(--accent)}
+.empty{text-align:center;color:var(--ink2);padding:32px 16px;font-size:13px}
+.zlabel{padding:9px 14px;font-family:var(--fairy);font-weight:700;font-size:12.5px;color:#fff;letter-spacing:.4px}
+.sban{background:linear-gradient(135deg,var(--gold-soft),var(--panel));border:1.5px solid var(--gold-line);border-radius:16px;padding:13px 15px;margin:12px 0 2px;font-size:12.5px;line-height:1.6;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.sbtns{display:flex;gap:8px}
+.sbtns button{flex:1;border:none;background:var(--accent);color:#fff;border-radius:11px;padding:9px;font-family:var(--disp);font-weight:700;font-size:13px}
+.sbtns button.ghost{background:var(--panel2);color:var(--ink2);border:1.5px solid var(--gold-line)}
+.shareInput{width:100%;font-size:11px;padding:9px 11px;border:1.5px solid var(--gold-line);border-radius:11px;background:var(--panel2);color:var(--ink);margin-bottom:9px}
+</style>
+
+<header>
+  <div class="wrap hdr">
+    <div class="marquee">
+      <svg class="castle" viewBox="0 0 120 90" fill="currentColor" aria-hidden="true">
+        <path d="M4 88h112v-2H4zM10 86V52h10v34zM100 86V52h10v34z"/>
+        <path d="M15 52l-5-10h10zM105 52l-5-10h10z"/>
+        <rect x="30" y="40" width="12" height="46"/><path d="M36 40l-6-12 6 4 6-4z"/>
+        <rect x="78" y="40" width="12" height="46"/><path d="M84 40l-6-12 6 4 6-4z"/>
+        <rect x="50" y="20" width="20" height="66"/><path d="M60 20l-12-18 12 6 12-6z"/>
+        <path d="M60 2v-12M60-10l12 5-12 3z" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="55" y="60" width="10" height="26" rx="5"/>
+      </svg>
+      <div class="brand">
+        <div class="logo">🏰</div>
+        <div>
+          <h1>3家族ディズニー作戦マップ</h1>
+          <small>身長・待ち時間・トイレが一目でわかる子連れプランナー</small>
+        </div>
+      </div>
+      <div class="dayToggle">
+        <button id="btnSea" class="on sea" onclick="setPark('sea')">1日目・シー<small>DisneySea</small></button>
+        <button id="btnLand" class="land" onclick="setPark('land')">2日目・ランド<small>Disneyland</small></button>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot" id="liveDot"></span>
+      <span class="mut" id="liveTxt">読み込み中…</span>
+      <button class="refresh" onclick="loadLive(true)"><span id="rIco">⟳</span>更新</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="shareBanner" hidden></div>
+  <section id="tab-map"></section>
+  <section id="tab-list" hidden></section>
+  <section id="tab-member" hidden></section>
+  <section id="tab-plan" hidden></section>
+</main>
+
+<nav class="tabs">
+  <button id="nav-map" class="on" onclick="setTab('map')"><span class="ic">🗺️</span>マップ</button>
+  <button id="nav-list" onclick="setTab('list')"><span class="ic">🎢</span>のりもの</button>
+  <button id="nav-member" onclick="setTab('member')"><span class="ic">👨‍👩‍👧‍👦</span>メンバー</button>
+  <button id="nav-plan" onclick="setTab('plan')"><span class="ic">📋</span>プラン</button>
+</nav>
+
+<script>
+/* ================= DATA ================= */
+const PARKS={
+  sea:{id:'67b290d5-3478-4f23-b601-2f8fb71ba803',name:'東京ディズニーシー'},
+  land:{id:'3cc919f1-d16d-43e0-8c3f-1dd269bd1a42',name:'東京ディズニーランド'}
+};
+const LANDS={
+ sea:[
+  {k:'fs',n:'ファンタジースプリングス',ic:'💧',c:'#3aa6b0',baby:false,aid:false,rest:true},
+  {k:'lrd',n:'ロストリバーデルタ',ic:'🗿',c:'#5f8a3a',baby:true,aid:false,rest:false},
+  {k:'pd',n:'ポートディスカバリー',ic:'🔭',c:'#2f8bc0',baby:false,aid:false,rest:false},
+  {k:'mi',n:'ミステリアスアイランド',ic:'🌋',c:'#c0562f',baby:true,aid:false,rest:false},
+  {k:'ml',n:'マーメイドラグーン',ic:'🐚',c:'#c65f9c',baby:true,aid:false,rest:true},
+  {k:'ac',n:'アラビアンコースト',ic:'🕌',c:'#c99a3f',baby:false,aid:false,rest:false},
+  {k:'aw',n:'アメリカンウォーターフロント',ic:'⚓',c:'#3b5b8c',baby:false,aid:true,rest:true},
+  {k:'mh',n:'メディテレーニアンハーバー',ic:'⛵',c:'#c77a4a',baby:false,aid:true,rest:false},
+ ],
+ land:[
+  {k:'wb',n:'ワールドバザール',ic:'🎪',c:'#c0473f',baby:true,aid:true,rest:true},
+  {k:'adv',n:'アドベンチャーランド',ic:'🌴',c:'#4f8a4a',baby:false,aid:false,rest:false},
+  {k:'wl',n:'ウエスタンランド',ic:'🤠',c:'#a0703a',baby:false,aid:false,rest:false},
+  {k:'cc',n:'クリッターカントリー',ic:'🦫',c:'#3a9a86',baby:false,aid:false,rest:false},
+  {k:'fl',n:'ファンタジーランド',ic:'🏰',c:'#b95a93',baby:false,aid:false,rest:true},
+  {k:'tt',n:'トゥーンタウン',ic:'🎨',c:'#d09a2a',baby:true,aid:false,rest:false},
+  {k:'tl',n:'トゥモローランド',ic:'🚀',c:'#5a6ec0',baby:false,aid:false,rest:false},
+ ]
+};
+const A={
+ sea:[
+  {id:'3407ebac-c575-4c31-b794-1d271014d303',n:'ソアリン：ファンタスティック・フライト',z:'mh',min:102,type:'ride',scary:1,tags:['屋内','浮遊感','人気']},
+  {id:'6e44f5c0-f996-45ad-aa7e-9738df6a6047',n:'フォートレス・エクスプロレーション',z:'mh',min:0,type:'walk',scary:0,tags:['散策']},
+  {id:'44df35ec-28cb-4465-9ae1-95a4d6445a82',n:'ザ・レオナルドチャレンジ',z:'mh',min:0,type:'play',scary:0,tags:['探索ゲーム']},
+  {id:'2ca8f848-b8e2-4ba5-aa6e-e0fb37e85d0b',n:'ヴェネツィアン・ゴンドラ',z:'mh',min:0,type:'gentle',scary:0,tags:['ボート','景色']},
+  {id:'7afc3143-befb-4a61-9c86-8d6869eb2ce3',n:'トランジットスチーマーライン（ハーバー）',z:'mh',min:0,type:'gentle',scary:0,tags:['ボート','移動']},
+  {id:'4ca7254c-7abc-4e52-82e0-9c562c096494',n:'タワー・オブ・テラー',z:'aw',min:102,type:'thrill',scary:2,tags:['落下','絶叫','暗い']},
+  {id:'abb5d6ec-469e-4ab0-8685-5f04e9749653',n:'トイ・ストーリー・マニア！',z:'aw',min:0,type:'ride',scary:0,tags:['シューティング','人気']},
+  {id:'5449e9da-ee4c-47d8-a60a-8a964b94c32d',n:'ビッグシティ・ヴィークル',z:'aw',min:0,type:'gentle',scary:0,tags:['乗り物']},
+  {id:'2daf12ac-21fd-4bfd-bbf6-0c98bed03e8f',n:'ディズニーシー・エレクトリックレールウェイ（アメリカン）',z:'aw',min:0,type:'gentle',scary:0,tags:['電車','移動']},
+  {id:'8dbc5d52-ef41-406d-aaad-eb2e6bb3eaea',n:'トランジットスチーマーライン（アメリカン）',z:'aw',min:0,type:'gentle',scary:0,tags:['ボート','移動']},
+  {id:'71943126-e4ac-49c5-ac61-ac1687ad33af',n:'タートル・トーク',z:'aw',min:0,type:'show',scary:0,tags:['屋内','参加型']},
+  {id:'2159960b-4f42-4974-93be-7519816de45d',n:'アクアトピア',z:'pd',min:0,type:'ride',scary:0,tags:['水上','少し濡れる']},
+  {id:'179e4e82-26ed-4b04-bf21-f03808b61df4',n:'ニモ&フレンズ・シーライダー',z:'pd',min:90,type:'ride',scary:1,tags:['屋内','揺れる']},
+  {id:'c8744918-42c0-427d-8947-c3dbd1abf8d5',n:'ディズニーシー・エレクトリックレールウェイ（ポート）',z:'pd',min:0,type:'gentle',scary:0,tags:['電車','移動']},
+  {id:'f66e072d-8bab-48e5-b8cf-6d1947bd291b',n:'インディ・ジョーンズ・アドベンチャー',z:'lrd',min:117,type:'thrill',scary:2,tags:['暗い','揺れる','人気']},
+  {id:'dd942cd2-b364-4262-af12-ca1a5012528b',n:'レイジングスピリッツ',z:'lrd',min:117,type:'coaster',scary:2,tags:['絶叫','1回転','195cmまで']},
+  {id:'de24aae5-66b9-469f-91f6-ef6c3f3b665c',n:'トランジットスチーマーライン（ロストリバー）',z:'lrd',min:0,type:'gentle',scary:0,tags:['ボート','移動']},
+  {id:'63ef07eb-9bfb-4782-885e-cfd08ced82f0',n:'シンドバッド・ストーリーブック・ヴォヤッジ',z:'ac',min:0,type:'gentle',scary:0,tags:['ボート','子供向け','暗い']},
+  {id:'abbf5b3e-94e5-420a-8257-34594cd9d590',n:'ジャスミンのフライングカーペット',z:'ac',min:0,type:'gentle',scary:0,tags:['回転','上下']},
+  {id:'76aed95a-dce8-4d03-8c2a-8ad69b3d0d4a',n:'キャラバンカルーセル',z:'ac',min:0,type:'gentle',scary:0,tags:['メリーゴーランド']},
+  {id:'dcad67fe-76bb-4df2-bf5b-aaf70e8efc12',n:'マジックランプシアター',z:'ac',min:0,type:'show',scary:0,tags:['屋内','3D']},
+  {id:'2d56558a-d4d2-4f79-898c-178c2c20cf67',n:'フランダーのフライングフィッシュコースター',z:'ml',min:90,type:'coaster',scary:1,tags:['コースター','子供向け']},
+  {id:'58815e8e-7c01-4a42-8a00-1bd1c82a0252',n:'スカットルのスクーター',z:'ml',min:0,type:'gentle',scary:0,tags:['回転','子供向け']},
+  {id:'c6c0d34d-531a-40d9-b711-3497fd53c28b',n:'ジャンピン・ジェリーフィッシュ',z:'ml',min:0,type:'gentle',scary:0,tags:['上下','子供向け']},
+  {id:'f37d7fe8-169f-459d-86f3-4843655358bd',n:'ブローフィッシュ・バルーンレース',z:'ml',min:0,type:'gentle',scary:0,tags:['回転','子供向け']},
+  {id:'7594d3f2-b3d1-47a0-b64f-8bc01d373830',n:'ワールプール',z:'ml',min:0,type:'gentle',scary:0,tags:['回転','子供向け']},
+  {id:'a674e149-8ae3-4338-b1e3-c9f6b804f475',n:'アリエルのプレイグラウンド',z:'ml',min:0,type:'play',scary:0,tags:['遊び場','屋内']},
+  {id:'70c16669-c9ba-4f83-bd25-3cd9ea5a0b0c',n:'マーメイドラグーンシアター',z:'ml',min:0,type:'show',scary:0,tags:['屋内','ミュージカル']},
+  {id:'c8526be3-e82c-4692-ae44-e8f2d1142c8a',n:'センター・オブ・ジ・アース',z:'mi',min:117,type:'thrill',scary:2,tags:['絶叫','落下','暗い']},
+  {id:'c15da0f5-9668-48ee-b93a-8b737b6acf5b',n:'海底2万マイル',z:'mi',min:0,type:'gentle',scary:1,tags:['暗い','潜水艇']},
+  {id:'9fb0c97c-ebf7-4c25-8ea7-a3f4fe2aa9ec',n:'アナとエルサのフローズンジャーニー',z:'fs',min:0,type:'gentle',scary:1,tags:['ボート','少し落下','人気']},
+  {id:'10b5b89e-02a6-4456-9ddd-69e06c2bded4',n:'ラプンツェルのランタンフェスティバル',z:'fs',min:0,type:'gentle',scary:0,tags:['ボート','景色','人気']},
+  {id:'e8c15bc6-aaab-44ef-8285-1d92ebd2c47d',n:'ピーターパンのネバーランドアドベンチャー',z:'fs',min:102,type:'ride',scary:1,tags:['浮遊感','人気']},
+  {id:'c0224e78-abf6-4f89-b0d4-38647a98dd4d',n:'フェアリー・ティンカーベルのビジーバギー',z:'fs',min:0,type:'gentle',scary:0,tags:['子供向け']},
+ ],
+ land:[
+  {id:'cf1e721e-ba51-4e48-a2bc-b07883091e88',n:'オムニバス',z:'wb',min:0,type:'gentle',scary:0,tags:['乗り物','移動']},
+  {id:'55458c39-ee47-4b8d-ab07-991d12a0313d',n:'ペニーアーケード',z:'wb',min:0,type:'play',scary:0,tags:['屋内','ゲーム']},
+  {id:'e0887415-3da2-458c-8b88-0691e6b8ab63',n:'ジャングルクルーズ',z:'adv',min:0,type:'gentle',scary:0,tags:['ボート']},
+  {id:'52eb0fc9-5853-49c8-8c72-1e5e83aae1c1',n:'カリブの海賊',z:'adv',min:0,type:'gentle',scary:1,tags:['ボート','暗い','少し落下']},
+  {id:'6ee0697f-57ba-4c7b-8216-7c55b21288d4',n:'ウエスタンリバー鉄道',z:'adv',min:0,type:'gentle',scary:0,tags:['電車','景色']},
+  {id:'f9321bc7-aa96-4a70-b963-681482384d1b',n:'スイスファミリー・ツリーハウス',z:'adv',min:0,type:'walk',scary:0,tags:['散策']},
+  {id:'4f0b3416-0b0a-419b-ba8c-6ee00b7d7144',n:'魅惑のチキルーム：スティッチ・プレゼンツ',z:'adv',min:0,type:'show',scary:0,tags:['屋内']},
+  {id:'e3577b4a-f1d9-4ec5-aacf-b99977ea88c9',n:'ビッグサンダー・マウンテン',z:'wl',min:102,type:'coaster',scary:2,tags:['コースター','絶叫']},
+  {id:'02a96ff7-da13-48b5-b1a8-f29d9f6109fc',n:'蒸気船マークトウェイン号',z:'wl',min:0,type:'gentle',scary:0,tags:['ボート','景色']},
+  {id:'83f11a48-0d22-4429-8e59-43fd611d6795',n:'カントリーベア・シアター',z:'wl',min:0,type:'show',scary:0,tags:['屋内']},
+  {id:'077c390c-c214-40c4-83e9-93d8f8621141',n:'トムソーヤ島いかだ',z:'wl',min:0,type:'walk',scary:0,tags:['いかだ','散策']},
+  {id:'4876ec54-92ed-4b0c-8b1b-292bba89c61c',n:'ウエスタンランド・シューティングギャラリー',z:'wl',min:0,type:'play',scary:0,tags:['射的','有料']},
+  {id:'037a13bf-b06e-4902-aa12-02d758d1718d',n:'ビーバーブラザーズのカヌー探険',z:'cc',min:0,type:'gentle',scary:0,tags:['カヌー','自分で漕ぐ']},
+  {id:'dfe25d8e-e234-4020-a261-30c6825d0680',n:'スプラッシュ・マウンテン',z:'cc',min:90,type:'thrill',scary:2,tags:['落下','絶叫','濡れる']},
+  {id:'0de1b543-46fd-4c3f-81c8-31d0cab9ef63',n:'イッツ・ア・スモールワールド',z:'fl',min:0,type:'gentle',scary:0,tags:['ボート','子供向け']},
+  {id:'a88464b5-2cf5-4ef1-b38f-96e07b233bf2',n:'プーさんのハニーハント',z:'fl',min:0,type:'ride',scary:0,tags:['子供向け','人気']},
+  {id:'8fce6b54-e3e4-40bb-a574-93c8327c3fab',n:'ホーンテッドマンション',z:'fl',min:0,type:'gentle',scary:1,tags:['暗い','おばけ']},
+  {id:'e541ad8f-1457-469a-8f35-457555f475ad',n:'ピーターパン空の旅',z:'fl',min:0,type:'gentle',scary:0,tags:['浮遊感','暗い']},
+  {id:'a853aadd-2337-435a-b0a3-2c03db96e5e1',n:'白雪姫と七人のこびと',z:'fl',min:0,type:'gentle',scary:1,tags:['暗い','少し怖い']},
+  {id:'6922377e-0ff4-481f-9da3-35051938732a',n:'ピノキオの冒険旅行',z:'fl',min:0,type:'gentle',scary:1,tags:['暗い']},
+  {id:'78510449-ec64-47d3-a140-7b473dbaddf2',n:'空飛ぶダンボ',z:'fl',min:0,type:'gentle',scary:0,tags:['上下','子供向け']},
+  {id:'1fb05b7d-953a-4fa7-b7ed-db2eb62b85bf',n:'キャッスルカルーセル',z:'fl',min:0,type:'gentle',scary:0,tags:['メリーゴーランド']},
+  {id:'cfaa7d1c-111e-49b9-b21b-134eac4000e8',n:'アリスのティーパーティー',z:'fl',min:0,type:'gentle',scary:0,tags:['回転','子供向け']},
+  {id:'392ca2e8-afe0-4103-b296-c45bd373d036',n:'ミッキーのフィルハーマジック',z:'fl',min:0,type:'show',scary:0,tags:['屋内','3D']},
+  {id:'f82709b6-51a3-4b65-8d6f-c2472f5053df',n:'シンデレラのフェアリーテイル・ホール',z:'fl',min:0,type:'walk',scary:0,tags:['散策','屋内']},
+  {id:'e76670f0-9f5f-4918-8491-9bf51e73a596',n:'美女と野獣“魔法のものがたり”',z:'fl',min:0,type:'ride',scary:0,tags:['人気','屋内']},
+  {id:'73384e33-a86a-4601-996f-61dbffba6ec2',n:'ロジャーラビットのカートゥーンスピン',z:'tt',min:0,type:'ride',scary:1,tags:['回転','暗い']},
+  {id:'52c5e406-67e2-4d37-aee8-987644d87b63',n:'ガジェットのゴーコースター',z:'tt',min:90,type:'coaster',scary:1,tags:['コースター','子供向け']},
+  {id:'534ca90a-2626-4a45-9b7b-1964ed15678e',n:'ミニーの家',z:'tt',min:0,type:'walk',scary:0,tags:['散策','写真']},
+  {id:'a0a63e1c-3fc6-4433-b9b1-f5e798ab1f00',n:'チップとデールのツリーハウス',z:'tt',min:0,type:'walk',scary:0,tags:['散策']},
+  {id:'2d215a6d-77a2-4c44-a2e3-c293c1289876',n:'ドナルドのボート',z:'tt',min:0,type:'play',scary:0,tags:['遊び場']},
+  {id:'74f17654-ceb1-4f12-9c19-ce6ed0587f33',n:'グーフィーのペイント&プレイハウス',z:'tt',min:0,type:'play',scary:0,tags:['参加型']},
+  {id:'5f0425c4-7d35-4afd-bb28-6c73f1920b1f',n:'トゥーンパーク',z:'tt',min:0,type:'play',scary:0,tags:['遊び場']},
+  {id:'512fd34c-2f0a-4e0a-bcc1-ef4d15c5f803',n:'スター・ツアーズ',z:'tl',min:102,type:'ride',scary:1,tags:['3D','揺れる']},
+  {id:'4ed6a812-df04-4aa8-acb9-c6b164dbb706',n:'モンスターズ・インク“ライド&ゴーシーク！”',z:'tl',min:0,type:'ride',scary:0,tags:['子供向け','人気']},
+  {id:'05c7400b-866d-4d47-9cb1-8722fe6b22da',n:'スティッチ・エンカウンター',z:'tl',min:0,type:'show',scary:0,tags:['屋内','参加型']},
+  {id:'ca00a0e8-f069-4d0a-9d5e-10cb63010956',n:'ベイマックスのハッピーライド',z:'tl',min:81,type:'ride',scary:1,tags:['回転','音楽']},
+ ]
+};
+const SHOWS_SEED={
+ sea:['ビリーヴ！～シー・オブ・ドリームス～（ハーバーショー）','ハーバーグリーティング / キャラクター登場'],
+ land:['エレクトリカルパレード・ドリームライツ（夜）','ハーモニー・イン・カラー（昼パレード）']
+};
+
+/* ================= STATE ================= */
+const DEFAULT_MEMBERS=[
+ {id:'m1',name:'父（じいじ）',adult:true,h:0},
+ {id:'m2',name:'母（ばあば）',adult:true,h:0},
+ {id:'m3',name:'兄',adult:true,h:0},
+ {id:'m4',name:'兄の奥さん',adult:true,h:0},
+ {id:'m5',name:'自分',adult:true,h:0},
+ {id:'m6',name:'配偶者',adult:true,h:0},
+ {id:'m7',name:'甥/姪（5歳）',adult:false,h:110},
+ {id:'m8',name:'甥/姪（4歳）',adult:false,h:102},
+ {id:'m9',name:'こども（3歳）',adult:false,h:95},
+ {id:'m10',name:'こども（1歳）',adult:false,h:78},
+];
+function clone(o){return JSON.parse(JSON.stringify(o));}
+let state={park:'sea',tab:'map',members:null,prio:{},done:{},shows:{sea:[],land:[]},filter:'all'};
+let live={};
+let liveTime=null, loading=false;
+const LS='tdr_planner_v2';
+function save(){try{localStorage.setItem(LS,JSON.stringify({members:state.members,prio:state.prio,done:state.done,shows:state.shows}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d){state.members=d.members||null;state.prio=d.prio||{};state.done=d.done||{};state.shows=d.shows||{sea:[],land:[]};}}catch(e){}}
+load();
+if(!state.members||!state.members.length)state.members=clone(DEFAULT_MEMBERS);
+if(!state.shows.sea||!state.shows.sea.length)state.shows.sea=SHOWS_SEED.sea.map(t=>({t,p:null}));
+if(!state.shows.land||!state.shows.land.length)state.shows.land=SHOWS_SEED.land.map(t=>({t,p:null}));
+
+/* ================= LIVE ================= */
+async function loadLive(manual){
+  if(loading)return;loading=true;
+  const ico=document.getElementById('rIco');if(ico)ico.classList.add('spin');
+  const dot=document.getElementById('liveDot'),txt=document.getElementById('liveTxt');
+  if(txt)txt.textContent='待ち時間を取得中…';
+  try{
+    const r=await fetch('https://api.themeparks.wiki/v1/entity/'+PARKS[state.park].id+'/live',{cache:'no-store'});
+    if(!r.ok)throw new Error(r.status);
+    const j=await r.json();live={};
+    (j.liveData||[]).forEach(e=>{
+      let w=null;if(e.queue&&e.queue.STANDBY&&typeof e.queue.STANDBY.waitTime==='number')w=e.queue.STANDBY.waitTime;
+      live[e.id]={status:e.status,wait:w};
+    });
+    liveTime=new Date();
+    if(dot)dot.classList.add('live');
+    if(txt)txt.innerHTML='<b style="color:var(--ok)">ライブ</b> '+PARKS[state.park].name+'・'+fmtTime(liveTime)+' 時点';
+  }catch(err){
+    if(dot)dot.classList.remove('live');
+    if(txt)txt.innerHTML='待ち時間を取得できませんでした（電波の良い所で「更新」を）';
+  }finally{
+    loading=false;if(ico)ico.classList.remove('spin');render();
+  }
+}
+function fmtTime(d){return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+function waitClass(a){
+  const l=live[a.id];
+  if(!l||(l.status&&l.status!=='OPERATING'))return{cls:'x',txt:statusJa(l&&l.status),sub:''};
+  if(l.wait===null||l.wait===undefined)return{cls:'g',txt:'随時',sub:'案内'};
+  const w=l.wait;const cls=w<=20?'g':w<=45?'y':'r';
+  return{cls,txt:w,sub:'分'};
+}
+function statusJa(s){if(s==='CLOSED')return'休止';if(s==='REFURBISHMENT')return'改修';if(s==='DOWN')return'中止';return'—';}
+
+/* ================= ELIGIBILITY ================= */
+function riders(a){
+  const kids=state.members.filter(m=>!m.adult);
+  const ok=[],ng=[];
+  kids.forEach(m=>{(a.min===0||m.h>=a.min)?ok.push(m):ng.push(m);});
+  return{ok,ng};
+}
+function shortName(m){const mt=m.name.match(/（([^）]+)）/);return mt?mt[1]:m.name;}
+
+/* ================= RENDER ================= */
+function setPark(p){state.park=p;
+  document.getElementById('btnSea').className=p==='sea'?'on sea':'sea';
+  document.getElementById('btnLand').className=p==='land'?'on land':'land';
+  document.documentElement.style.setProperty('--accent',p==='sea'?'var(--sea)':'var(--land)');
+  document.documentElement.style.setProperty('--accent-soft',p==='sea'?'var(--sea-soft)':'var(--land-soft)');
+  render();loadLive();
+}
+function setTab(t){state.tab=t;
+  ['map','list','member','plan'].forEach(x=>{
+    document.getElementById('tab-'+x).hidden=x!==t;
+    document.getElementById('nav-'+x).className=x===t?'on':'';
+  });
+  window.scrollTo(0,0);render();
+}
+function render(){
+  try{
+    if(state.tab==='map')renderMap();
+    else if(state.tab==='list')renderList();
+    else if(state.tab==='member')renderMember();
+    else if(state.tab==='plan')renderPlan();
+  }catch(e){console.error(e);}
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function silhouette(park){
+  if(park==='sea')return '<svg class="sil" viewBox="0 0 120 90" fill="currentColor" aria-hidden="true"><path d="M2 88h116v-2H2z"/><path d="M40 86 62 30l22 56z"/><path d="M62 30l-8 20h16z" opacity=".6"/><circle cx="30" cy="40" r="4" opacity=".7"/><circle cx="95" cy="34" r="3" opacity=".6"/></svg>';
+  return '<svg class="sil" viewBox="0 0 120 90" fill="currentColor" aria-hidden="true"><path d="M2 88h116v-2H2zM24 86V50h10v36zM86 86V50h10v36z"/><path d="M29 50l-5-10h10zM91 50l-5-10h10z"/><rect x="42" y="38" width="12" height="48"/><path d="M48 38l-6-12 6 4 6-4z"/><rect x="66" y="38" width="12" height="48"/><path d="M72 38l-6-12 6 4 6-4z"/><rect x="54" y="16" width="12" height="70"/><path d="M60 16 48 0l12 6 12-6z"/></svg>';
+}
+
+/* ---- MAP ---- */
+function renderMap(){
+  const el=document.getElementById('tab-map');
+  const lands=LANDS[state.park], atts=A[state.park];
+  let h=`<div class="pbanner ${state.park}">${silhouette(state.park)}
+     <div class="pt">${esc(PARKS[state.park].name)}</div>
+     <div class="ps">${state.park==='sea'?'1日目 ✦ エリアマップ':'2日目 ✦ エリアマップ'}（入口は下側）</div></div>`;
+  h+=`<div class="card legend">
+     <span><i style="background:var(--ok)"></i>〜20分</span>
+     <span><i style="background:var(--warn)"></i>〜45分</span>
+     <span><i style="background:var(--bad)"></i>46分〜</span>
+     <span><i style="background:var(--grey)"></i>休止/随時</span>
+     <span>🚻トイレ</span><span>🍼ベビーセンター</span><span>➕救護室</span></div>`;
+  lands.forEach(L=>{
+    const list=atts.filter(a=>a.z===L.k);
+    let fac='🚻';if(L.baby)fac+=' 🍼';if(L.aid)fac+=' ➕';
+    h+=`<div class="card zone"><div class="zh" style="border-left:6px solid ${L.c};background:${L.c}16">
+        <span class="zi">${L.ic}</span><span class="zn">${esc(L.n)}</span><span class="fac">${fac}</span></div>`;
+    h+=`<div class="zpins">`;
+    list.forEach(a=>{
+      const w=waitClass(a);
+      h+=`<button class="zpin" onclick="openAtt('${a.id}')"><span class="pd ${w.cls}"></span>
+          <span class="pn">${esc(a.n)}</span><span class="pw">${w.txt}${w.sub?'<span style="font-size:9px">'+w.sub+'</span>':''}</span></button>`;
+    });
+    h+=`</div>`;
+    const facs=[];facs.push('🚻 トイレあり');if(L.baby)facs.push('🍼 ベビーセンター（授乳・オムツ替え）');if(L.aid)facs.push('➕ 救護室');if(L.rest)facs.push('🪑 屋内で休憩しやすい');
+    h+=`<div class="facline">${facs.join('　/　')}</div></div>`;
+  });
+  h+=`<div class="foot">🍼ベビーセンターの位置は目安です。授乳室・オムツ替え台の正確な場所は公式アプリ／園内マップでご確認ください。</div>`;
+  el.innerHTML=h;
+}
+function openAtt(id){
+  const a=A[state.park].find(x=>x.id===id);if(!a)return;
+  const w=waitClass(a);const rr=riders(a);
+  let msg=a.n+'\n\n';
+  msg+='エリア：'+LANDS[state.park].find(l=>l.k===a.z).n+'\n';
+  msg+='いま：'+w.txt+(w.sub||'')+'\n';
+  msg+='身長制限：'+(a.min===0?'なし':a.min+'cm以上')+'\n';
+  if(!a.min){msg+='区分：どなたでもOK（0〜1歳もひざ上/同乗で楽しめます）\n';}
+  else{msg+='乗れる子：'+(rr.ok.length?rr.ok.map(shortName).join('・'):'なし')+'\n';
+       if(rr.ng.length)msg+='まだ乗れない子：'+rr.ng.map(shortName).join('・')+'\n';}
+  if(a.scary===2)msg+='\n⚠ 絶叫・怖さ強め。小さい子は注意。';
+  else if(a.scary===1)msg+='\n△ 暗い/揺れ/落下が少しあります。';
+  alert(msg);
+}
+
+/* ---- LIST ---- */
+function renderList(){
+  const el=document.getElementById('tab-list');
+  let h=`<div class="filters">
+    ${filterBtn('all','すべて')}${filterBtn('kids','小さい子OK')}${filterBtn('ride','乗り物')}${filterBtn('show','ショー')}${filterBtn('calm','怖くない')}${filterBtn('must','◎○のみ')}
+    </div>`;
+  h+=`<div class="sortsel">並び替え
+     <select id="sortSel" onchange="render()">
+       <option value="area">エリア順</option>
+       <option value="wait">待ち時間が短い順</option>
+       <option value="waitd">待ち時間が長い順</option>
+     </select>
+     <span class="mut" style="margin-left:auto">${A[state.park].length}件</span></div>`;
+  let list=A[state.park].slice();
+  const f=state.filter;
+  if(f==='kids')list=list.filter(a=>a.min===0&&a.scary<2);
+  else if(f==='ride')list=list.filter(a=>['ride','coaster','thrill','gentle','water'].includes(a.type));
+  else if(f==='show')list=list.filter(a=>a.type==='show');
+  else if(f==='calm')list=list.filter(a=>a.scary===0);
+  else if(f==='must')list=list.filter(a=>state.prio[a.id]);
+  const sel=document.getElementById('sortSel');const sort=sel?sel.value:'area';
+  const wv=a=>{const l=live[a.id];if(!l||l.status!=='OPERATING')return 99999;return l.wait===null?-1:l.wait;};
+  if(sort==='wait')list.sort((a,b)=>wv(a)-wv(b));
+  else if(sort==='waitd')list.sort((a,b)=>wv(b)-wv(a));
+  else{const order=LANDS[state.park].map(l=>l.k);list.sort((a,b)=>order.indexOf(a.z)-order.indexOf(b.z));}
+  if(!list.length){h+=`<div class="empty">この条件の乗り物はありません</div>`;el.innerHTML=h;return;}
+  let curZone=null;
+  h+=`<div class="card">`;
+  list.forEach(a=>{
+    if(sort==='area'&&a.z!==curZone){curZone=a.z;const L=LANDS[state.park].find(l=>l.k===a.z);
+      h+=`<div class="zlabel" style="background:${L.c}">${L.ic} ${esc(L.n)}</div>`;}
+    h+=attRow(a);
+  });
+  h+=`</div>`;
+  el.innerHTML=h;
+}
+function filterBtn(k,l){return `<button class="${state.filter===k?'on':''}" onclick="state.filter='${k}';render()">${l}</button>`;}
+function attRow(a){
+  const w=waitClass(a);const rr=riders(a);
+  const p=state.prio[a.id];const done=state.done[a.id];
+  let kidsHtml='';
+  if(a.min===0){kidsHtml=`<span class="kid yes">全員OK</span>`;}
+  else{
+    rr.ok.forEach(m=>kidsHtml+=`<span class="kid yes">${esc(shortName(m))}</span>`);
+    rr.ng.forEach(m=>kidsHtml+=`<span class="kid no">${esc(shortName(m))}</span>`);
+  }
+  let tags='';
+  tags+=`<span class="chip h">${a.min===0?'制限なし':a.min+'cm〜'}</span>`;
+  if(a.scary===2)tags+=`<span class="chip scary">絶叫</span>`;
+  a.tags.slice(0,3).forEach(t=>tags+=`<span class="chip tag">${esc(t)}</span>`);
+  return `<div class="att ${done?'done':''}">
+    <div class="wt ${w.cls}">${w.txt}<small>${w.sub||''}</small></div>
+    <div class="body">
+      <div class="nm">${esc(a.n)}</div>
+      <div class="meta">${tags}</div>
+      <div class="kids">${kidsHtml}</div>
+    </div>
+    <button class="prio ${p==='must'?'must':p==='want'?'want':''}" onclick="cyclePrio('${a.id}')" title="行きたい度">${p==='must'?'◎':p==='want'?'○':'＋'}</button>
+  </div>`;
+}
+function cyclePrio(id){const c=state.prio[id];state.prio[id]=c==='must'?'want':c==='want'?null:'must';if(!state.prio[id])delete state.prio[id];save();render();}
+
+/* ---- MEMBER ---- */
+function renderMember(){
+  const el=document.getElementById('tab-member');
+  let h=`<div class="hint">👶 各メンバーの身長を入れると、乗り物ごとに「誰が乗れるか」が自動で色分けされます。子どもの身長は成長で変わるので当日の実測値に更新してください。大人は身長制限クリア扱いです。</div>`;
+  h+=`<div class="section-t">こども（身長で判定）</div><div class="card">`;
+  state.members.filter(m=>!m.adult).forEach(m=>h+=memberRow(m));
+  h+=`</div>`;
+  h+=`<div class="section-t">大人</div><div class="card">`;
+  state.members.filter(m=>m.adult).forEach(m=>h+=memberRow(m));
+  h+=`</div>`;
+  h+=`<button class="addm" onclick="addMember(false)">＋ こどもを追加</button>`;
+  h+=`<button class="addm" onclick="addMember(true)">＋ 大人を追加</button>`;
+  h+=`<div class="section-t">身長の目安</div>
+   <div class="card" style="padding:14px;font-size:12.5px;line-height:1.9">
+   1歳 ≒ 75cm ／ 3歳 ≒ 95cm ／ 4歳 ≒ 102cm ／ 5歳 ≒ 108cm ／ 6歳 ≒ 115cm<br>
+   <span class="mut">※あくまで平均。乗れる／乗れないは実測が確実です。90・102・117cmが乗り物の分かれ目。</span></div>`;
+  el.innerHTML=h;
+}
+function memberRow(m){
+  const av=m.adult?'🧑':(m.h<85?'👶':'🧒');
+  return `<div class="mrow">
+    <div class="av">${av}</div>
+    <div>
+      <input type="text" value="${esc(m.name)}" onchange="setMName('${m.id}',this.value)">
+      <div class="ms">${m.adult?'大人（制限クリア）':'身長で判定'}</div>
+    </div>
+    <div class="hin">
+      ${m.adult?'<span class="mut">—</span>':`<input type="number" min="30" max="200" value="${m.h}" onchange="setMH('${m.id}',this.value)"><span class="mut">cm</span>`}
+      <button class="rm" onclick="delMember('${m.id}')" title="削除">✕</button>
+    </div></div>`;
+}
+function setMH(id,v){const m=state.members.find(x=>x.id===id);if(m){m.h=Math.max(0,parseInt(v)||0);save();}}
+function setMName(id,v){const m=state.members.find(x=>x.id===id);if(m){m.name=v.slice(0,20);save();}}
+function delMember(id){state.members=state.members.filter(m=>m.id!==id);save();render();}
+function addMember(adult){state.members.push({id:'x'+Date.now(),name:adult?'大人':'こども',adult,h:adult?0:100});save();render();}
+
+/* ---- PLAN ---- */
+function renderPlan(){
+  const el=document.getElementById('tab-plan');
+  const atts=A[state.park];
+  const must=atts.filter(a=>state.prio[a.id]==='must');
+  const want=atts.filter(a=>state.prio[a.id]==='want');
+  const chosen=[...must,...want];
+  const doneN=chosen.filter(a=>state.done[a.id]).length;
+  let h=`<div class="summary">
+    <div class="box"><b style="color:var(--bad)">${must.length}</b><span>◎ 必ず乗る</span></div>
+    <div class="box"><b style="color:var(--warn)">${want.length}</b><span>○ できれば</span></div>
+    <div class="box"><b style="color:var(--ok)">${doneN}</b><span>乗った！</span></div></div>`;
+  h+=`<div class="hint">🗓️ ${esc(PARKS[state.park].name)}の作戦。「のりもの」タブで＋を押して ◎／○ を付けると、ここにエリア順で並びます。人気のアトラクは<b>朝イチ</b>か<b>夜</b>が狙い目。身長制限のある乗り物は対象の子から先に回るとムダがありません。</div>`;
+  h+=`<div class="section-t">家族で共有（LINEで送る）</div>
+   <div class="card" style="padding:14px">
+    <div style="font-size:12.5px;line-height:1.7;margin-bottom:11px">この順位表（<b>シー・ランド両方の◎○／メンバー身長／見たいショー</b>）を1本のリンクにまとめます。<b>LINEで家族に送る</b>と、全員が同じ内容を開けます。順位を変えたら作り直して送り直してください。</div>
+    <input id="shareInput" class="shareInput" readonly value="${esc(shareURL())}">
+    <button id="copyBtn" class="addm" style="margin-top:0" onclick="copyShare()">リンクをコピー</button>
+    <div class="mut" style="font-size:11px;margin-top:9px">※必ず<b>ホスティング後の公開URL</b>でこのページを開いてから作成してください（いま開いているURLがリンクの土台になります）。「乗った！」チェックは各自の端末に保存されます。</div>
+   </div>`;
+  h+=`<div class="section-t">乗りたいアトラクション（エリア順）</div>`;
+  if(!chosen.length){h+=`<div class="empty">まだ選ばれていません。「のりもの」タブで行きたい乗り物に ◎／○ を付けましょう。</div>`;}
+  else{
+    LANDS[state.park].forEach(L=>{
+      const inz=chosen.filter(a=>a.z===L.k);if(!inz.length)return;
+      inz.sort((a,b)=>(state.prio[b.id]==='must')-(state.prio[a.id]==='must'));
+      h+=`<div class="card zone" style="margin-bottom:12px"><div class="zh" style="border-left:6px solid ${L.c};background:${L.c}16"><span class="zi">${L.ic}</span><span class="zn">${esc(L.n)}</span><span class="fac" style="font-size:12px;color:var(--ink2)">🚻${L.baby?' 🍼':''}${L.aid?' ➕':''}</span></div>`;
+      inz.forEach(a=>{
+        const w=waitClass(a);const done=state.done[a.id];const p=state.prio[a.id];
+        h+=`<div class="att ${done?'done':''}">
+          <button class="chk ${done?'on':''}" onclick="toggleDone('${a.id}')">✓</button>
+          <div class="body"><div class="nm">${p==='must'?'◎ ':'○ '}${esc(a.n)}</div>
+            <div class="meta"><span class="chip h">${a.min===0?'制限なし':a.min+'cm〜'}</span>${a.scary===2?'<span class="chip scary">絶叫</span>':''}<span class="chip tag">いま ${w.txt}${w.sub||''}</span></div></div>
+        </div>`;
+      });
+      h+=`</div>`;
+    });
+  }
+  h+=`<div class="section-t">見たいショー・パレード</div><div class="card">`;
+  const shows=state.shows[state.park];
+  shows.forEach((s,i)=>{
+    h+=`<div class="showrow">
+      <button class="sp ${s.p==='must'?'must':s.p==='want'?'want':''}" onclick="cycleShow(${i})">${s.p==='must'?'◎':s.p==='want'?'○':'＋'}</button>
+      <input value="${esc(s.t)}" onchange="setShow(${i},this.value)" placeholder="ショー名を入力">
+      <button class="rm" onclick="delShow(${i})">✕</button></div>`;
+  });
+  h+=`</div><button class="addm" onclick="addShow()">＋ ショー・パレードを追加</button>`;
+  h+=`<div class="foot">✅ チェックで「乗った！」記録。設定はこの端末に保存されます（家族で共有するなら1台にまとめて使うのがおすすめ）。</div>`;
+  el.innerHTML=h;
+}
+function toggleDone(id){state.done[id]=!state.done[id];if(!state.done[id])delete state.done[id];save();render();}
+function cycleShow(i){const s=state.shows[state.park][i];s.p=s.p==='must'?'want':s.p==='want'?null:'must';save();render();}
+function setShow(i,v){state.shows[state.park][i].t=v.slice(0,40);save();}
+function delShow(i){state.shows[state.park].splice(i,1);save();render();}
+function addShow(){state.shows[state.park].push({t:'',p:null});save();render();}
+
+/* ============ SHARE (family plan via URL) ============ */
+let incoming=null;
+function b64e(str){return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64d(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(escape(atob(s)));}
+function buildShare(){
+  const pr={};['sea','land'].forEach(pk=>{const mm=[],ww=[];A[pk].forEach((a,i)=>{const p=state.prio[a.id];if(p==='must')mm.push(i);else if(p==='want')ww.push(i);});pr[pk]={m:mm,w:ww};});
+  const sh={};['sea','land'].forEach(pk=>{sh[pk]=state.shows[pk].map(s=>[s.t,s.p==='must'?2:s.p==='want'?1:0]);});
+  const enc={v:1,m:state.members.map(m=>[m.name,m.adult?1:0,m.h]),pr,sh};
+  return b64e(JSON.stringify(enc));
+}
+function shareURL(){return location.origin+location.pathname+'#p='+buildShare();}
+function applyShare(code){try{const o=JSON.parse(b64d(code));if(!o||o.v!==1)return false;
+  if(Array.isArray(o.m)&&o.m.length)state.members=o.m.map((x,i)=>({id:'s'+i,name:x[0],adult:!!x[1],h:x[2]||0}));
+  state.prio={};['sea','land'].forEach(pk=>{const P=o.pr&&o.pr[pk];if(P){(P.m||[]).forEach(i=>{if(A[pk][i])state.prio[A[pk][i].id]='must';});(P.w||[]).forEach(i=>{if(A[pk][i])state.prio[A[pk][i].id]='want';});}});
+  if(o.sh)['sea','land'].forEach(pk=>{if(Array.isArray(o.sh[pk]))state.shows[pk]=o.sh[pk].map(x=>({t:x[0],p:x[1]===2?'must':x[1]===1?'want':null}));});
+  save();return true;}catch(e){return false;}}
+function getIncoming(){const s=(location.hash||'')+'&'+(location.search||'');const m=s.match(/[#?&]p=([^&#]+)/);return m?m[1]:null;}
+function updateBanner(){const el=document.getElementById('shareBanner');if(!el)return;
+  if(incoming){el.hidden=false;el.innerHTML=`<div class="sban"><span>📩 家族の<b>共有プラン</b>のリンクを開きました。読み込むと、この端末の順位付け・メンバー設定が上書きされます。</span><div class="sbtns"><button onclick="loadIncoming()">読み込む</button><button class="ghost" onclick="dismissIncoming()">あとで</button></div></div>`;}
+  else{el.hidden=true;el.innerHTML='';}}
+function loadIncoming(){if(incoming&&applyShare(incoming)){incoming=null;updateBanner();render();alert('共有プランを読み込みました。');}else{incoming=null;updateBanner();alert('読み込みに失敗しました。リンクが正しいかご確認ください。');}}
+function dismissIncoming(){incoming=null;updateBanner();}
+function copyShare(){const url=shareURL();const inp=document.getElementById('shareInput');
+  if(inp){inp.value=url;inp.removeAttribute('readonly');inp.focus();inp.select();try{inp.setSelectionRange(0,url.length);}catch(e){}}
+  let done=false;
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(()=>flashCopy(true)).catch(()=>{try{done=document.execCommand('copy');}catch(e){}flashCopy(done);});}
+  else{try{done=document.execCommand('copy');}catch(e){}flashCopy(done);}
+  if(inp)setTimeout(()=>inp.setAttribute('readonly',''),100);}
+function flashCopy(ok){const b=document.getElementById('copyBtn');if(!b)return;b.textContent=ok?'コピーしました ✓':'↑を長押しでコピー';setTimeout(()=>{b.textContent='リンクをコピー';},2000);}
+
+/* ================= INIT ================= */
+incoming=getIncoming();
+if(incoming){const hadPlan=Object.keys(state.prio||{}).length>0;if(!hadPlan){if(applyShare(incoming))incoming=null;}}
+setPark('sea');
+updateBanner();
+render();
+setInterval(function(){if(!document.hidden)loadLive();},5*60*1000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&liveTime&&Date.now()-liveTime>3*60*1000)loadLive();});
+</script>
